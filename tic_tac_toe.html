@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic Tac Toe</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+		td {
+			width: 50px;
+			height: 50px;
+			border: 1px solid black;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		td:hover {
+			background-color: #eee;
+		}
+		/* Set the background color for the whole page */
+		body {
+			background-color: #f0f0f0;
+		}
+
+		/* Style the table cells */
+		td {
+			width: 100px;
+			height: 100px;
+			border: 2px solid #333;
+			font-size: 60px;
+			font-weight: bold;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+
+		/* Style the table cells on hover */
+		td:hover {
+			background-color: #ddd;
+		}
+
+		/* Style the X symbol */
+		td[data-value="X"]::before {
+			content: "X";
+			color: #f00;
+		}
+
+		/* Style the O symbol */
+		td[data-value="O"]::before {
+			content: "O";
+			color: #00f;
+		}
+
+		/* Style the reset button */
+		button {
+			font-size: 20px;
+			padding: 10px 20px;
+			margin-top: 20px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		/* Style the reset button on hover */
+		button:hover {
+			background-color: #666;
+		}
+		body {
+			background-image: url('background.jpg');
+			background-size: cover;
+		}
+
+		table {
+			margin: 50px auto;
+			border-collapse: collapse;
+		}
+
+		td {
+			width: 100px;
+			height: 100px;
+			border: 2px solid #fff;
+			font-size: 80px;
+			font-weight: bold;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+			background-color: #c0c0c0;
+			color: #fff;
+		}
+
+		td:hover {
+			background-color: #f0f0f0;
+			color: #000;
+		}
+
+		td[data-value="X"] {
+			background-color: #ff6b6b;
+			color: #fff;
+		}
+
+		td[data-value="O"] {
+			background-color: #4aa3df;
+			color: #fff;
+		}
+
+		button {
+			font-size: 20px;
+			padding: 10px 20px;
+			margin-top: 20px;
+			background-color: #000;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #333;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td id="0"></td>
+			<td id="1"></td>
+			<td id="2"></td>
+		</tr>
+		<tr>
+			<td id="3"></td>
+			<td id="4"></td>
+			<td id="5"></td>
+		</tr>
+		<tr>
+			<td id="6"></td>
+			<td id="7"></td>
+			<td id="8"></td>
+		</tr>
+	</table>
+	<script>
+		// Initialize game variables
+		let currentPlayer = "X";
+		let gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+		// Get all the table cells
+		const cells = document.querySelectorAll("td");
+
+		// Add click event listener to each cell
+		cells.forEach(cell => {
+			cell.addEventListener("click", handleCellClick);
+		});
+
+		// Handle cell click event
+		function handleCellClick(event) {
+			const cellIndex = event.target.id;
+			if (gameBoard[cellIndex] === "") {
+				gameBoard[cellIndex] = currentPlayer;
+				event.target.textContent = currentPlayer;
+				checkWin();
+				togglePlayer();
+			}
+		}
+
+		// Toggle player
+		function togglePlayer() {
+			if (currentPlayer === "X") {
+				currentPlayer = "O";
+			} else {
+				currentPlayer = "X";
+			}
+		}
+
+		// Check for win
+		function checkWin() {
+			const winConditions = [
+				[0, 1, 2],
+				[3, 4, 5],
+				[6, 7, 8],
+				[0, 3, 6],
+				[1, 4, 7],
+				[2, 5, 8],
+				[0, 4, 8],
+				[2, 4, 6]
+			];
+
+			for (let condition of winConditions) {
+				const [a, b, c] = condition;
+				if (gameBoard[a] !== "" && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+					alert(`${currentPlayer} wins!`);
+					resetGame();
+					break;
+				}
+			}
+		}
+
+		// Reset game
+		function resetGame() {
+			gameBoard = ["", "", "", "", "", "", "", "", ""];
+			cells.forEach(cell => {
+				cell.textContent = "";
+			});
+		}
+	</script>
+</body>
+</html>
